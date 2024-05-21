@@ -1,0 +1,48 @@
+#Add PATH to python's .exe in both environment variables and system variables to execute code via terminal
+
+#Initial Variables
+string = " This; is+ my test string"
+string_len = len(string);
+
+#Variables for Sanitization checkpoint
+bad_chars = [';', '+', '=', ',']
+bad_char_flag = False
+good_string = ""
+
+#Variables for Output checkpoint
+word = ""
+words = []
+
+c = 0
+
+#Takes text and sanitizes it of all bad characters
+while c<string_len:
+    for bad_char in bad_chars:
+        if string[c] == bad_char:
+            bad_char_flag = True
+            #Line below to check if catching all bad characters
+            #print(string[c] + bad_char)
+    if bad_char_flag == False:
+        good_string += string[c]
+    bad_char_flag = False
+    c += 1
+c = 0
+
+#Test checkpoint for sanitization of bad characters
+print(good_string)
+#Takes all words and puts them into a list array
+while c<string_len:
+    if string[c] == " " and word != "":
+        words.append(word)
+        word = ""
+    elif c == string_len-1:
+        word = word + string[c]
+        words.append(word)
+        word = ""
+    else:
+        if string[c] != " ":
+            word = word + string[c]
+    c += 1
+#functionality check point 1
+
+
