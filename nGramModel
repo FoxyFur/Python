@@ -1,0 +1,36 @@
+#File initialization, character cleaning, and word list population
+fileName = "MarcusAureliusMeditations_Book1_Test.txt"
+file = open(fileName, "r")
+wordList = []
+badChars = [';', '+', '=', ',', '.']
+
+for line in file:
+    for word in line.split():
+        cleanWord = ""
+        for letter in word:
+             if letter not in badChars:
+                 cleanWord += letter
+        wordList.append(cleanWord.lower())
+
+#N-Gram Model
+n = 2
+wordListLen = len(wordList)
+nGram = {}
+
+for x in range(wordListLen-n+1):
+    wordPair = []
+    for y in range(n):
+        wordPair.append(wordList[x+y])
+        
+    wordPairStr = str(wordPair)
+    if wordPairStr not in nGram.keys():
+        nGram[wordPairStr] = 1
+    else:
+        updatedVal = nGram[wordPairStr] +1
+        nGram[wordPairStr] = updatedVal
+print(nGram)
+sum = 0
+for item in nGram.values():
+    sum += item
+print(sum)
+
