@@ -13,9 +13,10 @@ for line in file:
         wordList.append(cleanWord.lower())
 
 #N-Gram Model
-n = 2
+n = 2 #change n to desired size of gram
 wordListLen = len(wordList)
 nGram = {}
+wordPairList = [] #wordPairList used for easier searching
 
 for x in range(wordListLen-n+1):
     wordPair = []
@@ -25,12 +26,31 @@ for x in range(wordListLen-n+1):
     wordPairStr = str(wordPair)
     if wordPairStr not in nGram.keys():
         nGram[wordPairStr] = 1
+        wordPairList.append(wordPair)
     else:
         updatedVal = nGram[wordPairStr] +1
         nGram[wordPairStr] = updatedVal
-print(nGram)
-sum = 0
-for item in nGram.values():
-    sum += item
-print(sum)
+        wordPairList.append(wordPair)
+
+#Search query for nGrams
+query = "of"
+queryList = []
+
+for item in wordPairList:
+    if item[0] == query:
+        queryList.append(str(item))
+
+#Sort dictionary
+nGramSorted = {}
+nGramTotal = 0
+nGramSorted = {k: v for k, v in sorted(nGram.items(), key=lambda item: item[1], reverse=True)}
+
+for item in nGramSorted:
+    nGramTotal += 1
+    print(item + " occurs: " + str(nGramSorted[item]) + " times")
+print("The total amount of N-Grams is: " + str(nGramTotal) + "\n")
+
+for item in nGramSorted:
+    if item in queryList:
+        print(item + " occurences: " + str(nGramSorted[item]))
 
